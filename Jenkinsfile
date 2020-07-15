@@ -17,11 +17,11 @@ pipeline {
                	//def scannerHome = tool 'SonarQube Scanner 3.0'
 			    withSonarQubeEnv('nambasonar') {  
 				
-				sh ''' "curl -u admin:admin -X POST "'${sonar}'/api/projects/create?project=myproject&branch=test&name=myproject-test"" '''
-				sh ''' "curl -u admin:admin -d "projectKey=myproject:test&gateId=3" -X POST "'${sonar}'/api/qualitygates/select"" '''
-				sh ''' "curl -u admin:admin -d "projectKey=myproject:test&profileName=test&language=java" -X POST  "'${sonar}'/api/qualityprofiles/add_project"" ''' 
+				sh ''' "curl -u admin:admin -X POST "'${sonar}'/api/projects/create?project=myproject&branch=$GIT_BRANCH&name=myproject-$GIT_BRANCH"" '''
+				sh ''' "curl -u admin:admin -d "projectKey=myproject:$GIT_BRANCH&gateId=3" -X POST "'${sonar}'/api/qualitygates/select"" '''
+				sh ''' "curl -u admin:admin -d "projectKey=myproject:$GIT_BRANCH&profileName=test&language=java" -X POST  "'${sonar}'/api/qualityprofiles/add_project"" ''' 
 				sh 'sleep 10'
-				sh 'mvn clean install sonar:sonar -Dsonar.projectKey=myproject:test'
+				sh 'mvn clean install sonar:sonar -Dsonar.projectKey=myproject:$GIT_BRANCH'
 			    }
 		//     timeout(time: 1, unit: 'HOURS') {
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
