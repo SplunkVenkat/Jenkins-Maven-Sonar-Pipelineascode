@@ -12,7 +12,7 @@ pipeline {
                	//def scannerHome = tool 'SonarQube Scanner 3.0'
 			    withSonarQubeEnv('nambasonar') {
 				sh 'mvn clean install sonar:sonar'
-				sh '''sonar-scanner -Dsonar.host.url=http://35.222.131.78:9000/ -Dsonar.login=$SONAR_TOKEN=1143ecb51a8a91e1cd95a9ef60a05a24279edf74'''
+				sh '''curl -u "1143ecb51a8a91e1cd95a9ef60a05a24279edf74":"" --d "project=Asingle-module-project&branch=$GIT_BRANCH&name=Asingle-module-project-$GIT_BRANCH" $SONAR_URL/api/projects/create'''
 			    }
 		    // timeout(time: 1, unit: 'HOURS') {
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
