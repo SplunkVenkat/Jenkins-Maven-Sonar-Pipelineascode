@@ -21,7 +21,7 @@ pipeline {
 				sh ''' curl -u admin:admin -d "projectKey=myproject:${GIT_BRANCH#*/}&gateId=3" -X POST ""${sonar}/api/qualitygates/select"" '''
 				sh ''' curl -u admin:admin -d "projectKey=myproject:${GIT_BRANCH#*/}&profileName=test&language=java" -X POST ""${sonar}/api/qualityprofiles/add_project"" ''' 
 				sh 'sleep 10'
-				sh 'mvn clean install sonar:sonar -Dsonar.projectKey=myproject:${GIT_BRANCH#*/}'
+				sh 'mvn clean install sonar:sonar -Dsonar.projectKey=myproject -Dsonar.branch.name=${GIT_BRANCH#*/}'
 			    }
 		//     timeout(time: 1, unit: 'HOURS') {
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
