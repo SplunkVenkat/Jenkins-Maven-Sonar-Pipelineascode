@@ -20,7 +20,7 @@ pipeline {
 				
 				sh ''' curl -u $token: -X POST ""${sonar}/api/projects/create?"project=tokproject&branch=${GIT_BRANCH#*/}&name=tokproject-${GIT_BRANCH#*/}""" '''
 				sh ''' curl -u admin:admin -d "projectKey=tokproject:${GIT_BRANCH#*/}&gateId=3" -X POST ""${sonar}/api/qualitygates/select"" '''
-				sh ''' curl -u admin:admin -d "projectKey=tokproject:${GIT_BRANCH#*/}&profileName=test&language=java" -X POST ""${sonar}/api/qualityprofiles/add_project"" ''' 
+				sh ''' curl -u admin:admin -d "project=tokproject:${GIT_BRANCH#*/}&profileName=test&language=java" -X POST ""${sonar}/api/qualityprofiles/add_project"" ''' 
 				sh 'sleep 10'
 				sh 'mvn clean install sonar:sonar -Dsonar.projectKey=myproject:${GIT_BRANCH#*/}'
 			    }
