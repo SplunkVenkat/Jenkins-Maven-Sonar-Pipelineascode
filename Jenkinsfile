@@ -31,7 +31,7 @@ pipeline {
                                           exit 1  \
 				       else       \
                                           echo -e "Quality Gate Passed" \
-                                          exit 0 \
+                                          exit 0 ; \
                                        fi '''
 			    } 
 		//     timeout(time: 1, unit: 'HOURS') {
