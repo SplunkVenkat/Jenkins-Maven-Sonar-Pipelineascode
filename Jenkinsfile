@@ -26,7 +26,8 @@ pipeline {
 				sh ''' rm -rf result.txt && curl -u admin:admin "${sonar}/api/qualitygates/project_status?projectKey=project:${GIT_BRANCH#*/}" -o result.txt '''
 				sh ''' cat result.txt '''
 	                        sh ''' export status=$(cat result.txt | cut -d ':' -f 3 | cut -d ',' -f 1) '''
-				sh ''' chmod -R 777 *.sh | echo $status '''
+				sh ''' chmod -R 777 *.sh '''
+				echo "$status"
 				sh ''' ./script.sh '''
 			    } 
 		//     timeout(time: 1, unit: 'HOURS') {
