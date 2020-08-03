@@ -2,7 +2,7 @@ pipeline {
     agent any
     
      environment {
-        sonar = "http://35.232.151.227:9000"
+        sonar = "http://35.222.142.100:9000"
 	token = "44070443e101a72e1fb87c8128705d0b6e51b5c1"    
     }
 	
