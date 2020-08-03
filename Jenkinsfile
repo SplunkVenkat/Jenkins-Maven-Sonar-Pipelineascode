@@ -23,7 +23,17 @@ pipeline {
 				sh ''' curl -u admin:admin -d "project=project:${GIT_BRANCH#*/}&profileName=test&language=java" -X POST ""${sonar}/api/qualityprofiles/add_project"" ''' 
 				sh 'sleep 10'
 				sh 'mvn clean install sonar:sonar -Dsonar.projectKey=project:${GIT_BRANCH#*/}'
-			    }
+				sh ''' curl -u admin:admin "${sonar}/api/qualitygates/project_status?projectKey=project:${GIT_BRANCH#*/}" -o result.txt '''
+				sh ''' cat result.txt '''
+	                        sh ''' export status=$(cat result.txt | cut -d ':' -f 3 | cut -d ',' -f 1) '''
+				sh ''' if [ $status != '"OK"' ];then \
+				          echo -e "Quality Gate Failed. Please check the sonar for more info" \
+                                          exit 1  \
+				       else       \
+                                          echo -e "Quality Gate Passed"; \
+                                          exit 0 \
+                                       fi '''
+			    } 
 		//     timeout(time: 1, unit: 'HOURS') {
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
                     // true = set pipeline to UNSTABLE, false = don't
