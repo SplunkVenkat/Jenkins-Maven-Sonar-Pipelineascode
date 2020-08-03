@@ -23,7 +23,7 @@ pipeline {
 				sh ''' curl -u admin:admin -d "project=project:${GIT_BRANCH#*/}&profileName=test&language=java" -X POST ""${sonar}/api/qualityprofiles/add_project"" ''' 
 				sh 'sleep 2'
 				sh 'mvn clean install sonar:sonar -Dsonar.projectKey=project:${GIT_BRANCH#*/}'
-				sh ''' rm -rf result.txt && curl -u admin:admin "${sonar}/api/qualitygates/project_status?projectKey=project:${GIT_BRANCH#*/}" -o result.txt '''
+				sh ''' rm -rf result.txt || curl -u admin:admin "${sonar}/api/qualitygates/project_status?projectKey=project:${GIT_BRANCH#*/}" -o result.txt '''
 				sh ''' chmod -R 777 *.sh  '''
 				sh ''' ./script.sh '''
 			    } 
