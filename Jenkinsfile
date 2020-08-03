@@ -21,11 +21,12 @@ pipeline {
 				sh ''' curl -u $token: -X POST ""${sonar}/api/projects/create?"project=project&branch=${GIT_BRANCH#*/}&name=project-${GIT_BRANCH#*/}""" '''
 				sh ''' curl -u admin:admin -d "projectKey=project:${GIT_BRANCH#*/}&gateId=3" -X POST ""${sonar}/api/qualitygates/select"" '''
 				sh ''' curl -u admin:admin -d "project=project:${GIT_BRANCH#*/}&profileName=test&language=java" -X POST ""${sonar}/api/qualityprofiles/add_project"" ''' 
-				sh 'sleep 10'
+				sh 'sleep 5'
 				sh 'mvn clean install sonar:sonar -Dsonar.projectKey=project:${GIT_BRANCH#*/}'
 				sh ''' rm -rf result.txt && curl -u admin:admin "${sonar}/api/qualitygates/project_status?projectKey=project:${GIT_BRANCH#*/}" -o result.txt '''
 				sh ''' cat result.txt '''
 	                        sh ''' export status=$(cat result.txt | cut -d ':' -f 3 | cut -d ',' -f 1) '''
+				sh ''' echo $script '''
 				sh ''' chmod -R 777 *.sh |  ls -l '''
 				sh ''' ./script.sh '''
 			    } 
