@@ -30,7 +30,7 @@ pipeline {
 				          echo -e "Quality Gate Failed. Please check the sonar for more info" \
                                           exit 1  \
 				       else       \
-                                          echo -e "Quality Gate Passed"; \
+                                          echo -e "Quality Gate Passed" \
                                           exit 0 \
                                        fi '''
 			    } 
