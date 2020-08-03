@@ -27,6 +27,7 @@ pipeline {
 				sh ''' cat result.txt '''
 	                        sh ''' export status=$(cat result.txt | cut -d ':' -f 3 | cut -d ',' -f 1) '''
 				sh ''' ls -l '''
+                                sh ''' chmod -R 777 *.sh '''
 			    } 
 		//     timeout(time: 1, unit: 'HOURS') {
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
