@@ -24,7 +24,8 @@ pipeline {
 				sh 'sleep 2'
 				sh 'mvn clean install sonar:sonar -Dsonar.projectKey=project:${GIT_BRANCH#*/}'
 				sh ''' rm -rf result.txt && curl -u admin:admin "${sonar}/api/qualitygates/project_status?projectKey=project:${GIT_BRANCH#*/}" -o result.txt '''
-				sh ''' chmod -R 777 *.sh | ./script.sh  '''
+				sh ''' chmod -R 777 *.sh '''
+				sh ''' ./script.sh  '''
 			    } 
 		//     timeout(time: 1, unit: 'HOURS') {
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
