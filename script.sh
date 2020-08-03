@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "$status"
 if [ "$status" != '"OK"' ]; then
      echo -e "Quality Gate Failed. Please check the sonar for more info" && exit 1
   else       
