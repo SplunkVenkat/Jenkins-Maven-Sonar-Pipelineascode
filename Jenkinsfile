@@ -26,11 +26,7 @@ pipeline {
 				sh ''' curl -u admin:admin "${sonar}/api/qualitygates/project_status?projectKey=project:${GIT_BRANCH#*/}" -o result.txt '''
 				sh ''' cat result.txt '''
 	                        sh ''' export status=$(cat result.txt | cut -d ':' -f 3 | cut -d ',' -f 1) '''
-				sh """ cd $WORKSPACE/ci \
-				       ls -l  \
-                                       chmod -R 777 *.sh \
-                                       ./script.sh """
-
+				sh ''' cd $WORKSPACE/ci '''
 			    } 
 		//     timeout(time: 1, unit: 'HOURS') {
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
